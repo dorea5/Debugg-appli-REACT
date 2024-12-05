@@ -8,8 +8,8 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
 
-  // Trier les événements par date décroissante
-  const byDateDesc = data?.focus.sort((evtA, evtB) =>
+  // Vérifiez que data et data.focus sont définis
+  const byDateDesc = data?.focus?.sort((evtA, evtB) =>
     new Date(evtB.date) - new Date(evtA.date)
   );
 
@@ -20,11 +20,16 @@ const Slider = () => {
   useEffect(() => {
     const interval = setInterval(nextCard, 5000);
     return () => clearInterval(interval);
-  }, [index, byDateDesc.length]);
+  }, [index, byDateDesc?.length]);
+
+  // Vérifiez que byDateDesc est défini avant de rendre les éléments
+  if (!byDateDesc) {
+    return <div>Loading...</div>; // Ou un autre message de chargement
+  }
 
   return (
     <div className="SlideCardList">
-      {byDateDesc?.map((event, idx) => (
+      {byDateDesc.map((event, idx) => (
         <div key={event.id} className={`SlideCard SlideCard--${index === idx ? "display" : "hide"}`}>
           <img src={event.cover} alt="forum" />
           <div className="SlideCard__descriptionContainer">
@@ -38,7 +43,7 @@ const Slider = () => {
       ))}
       <div className="SlideCard__paginationContainer">
         <div className="SlideCard__pagination">
-          {byDateDesc?.map((event) => (
+          {byDateDesc.map((event) => (
             <input
               key={event.id}
               type="radio"
