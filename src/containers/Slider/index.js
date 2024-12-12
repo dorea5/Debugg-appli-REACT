@@ -8,7 +8,7 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
 
-  // Vérifiez que data et data.focus sont définis
+  // Vérifie si data et data.focus définis
   const byDateDesc = data?.focus?.sort((evtA, evtB) =>
     new Date(evtB.date) - new Date(evtA.date)
   );
@@ -22,9 +22,9 @@ const Slider = () => {
     return () => clearInterval(interval);
   }, [index, byDateDesc?.length]);
 
-  // Vérifiez que byDateDesc est défini avant de rendre les éléments
+  // Vérifie que byDateDesc est défini avant de rendre les éléments
   if (!byDateDesc) {
-    return <div>Loading...</div>; // Ou un autre message de chargement
+    return <div>Loading...</div>; // Ou  autre message de chargement
   }
 
   return (
