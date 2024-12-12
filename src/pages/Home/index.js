@@ -13,7 +13,12 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { last } = useData();
+  const { data, error } = useData(); // Récupère les données et erreurs depuis le contexte
+
+  if (error) return <div>Error: {error.message}</div>; // Gère l'erreur si elle se produit
+  if (!data) return <div>Loading...</div>; // Affiche "Loading..." tant que les données ne sont pas chargées
+
+  const last = data.events ? data.events[0] : null; // On récupère le premier événement ou null si pas de données
 
   return (
     <>
