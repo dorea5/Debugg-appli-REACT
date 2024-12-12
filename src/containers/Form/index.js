@@ -12,17 +12,19 @@ const Form = ({ onSuccess, onError }) => {
     async (evt) => {
       evt.preventDefault();
       setSending(true);
-      // We try to call mockContactApi
+      // Appelle l'API mockée et gère le succès ou l'erreur
       try {
         await mockContactApi();
         setSending(false);
+        onSuccess(); // Appelle la fonction onSuccess passée en prop
       } catch (err) {
         setSending(false);
-        onError(err);
+        onError(err); // Appelle la fonction onError passée en prop
       }
     },
     [onSuccess, onError]
   );
+
   return (
     <form onSubmit={sendContact}>
       <div className="row">
@@ -52,6 +54,7 @@ const Form = ({ onSuccess, onError }) => {
     </form>
   );
 };
+
 
 Form.propTypes = {
   onError: PropTypes.func,
